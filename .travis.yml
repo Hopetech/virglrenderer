@@ -1,0 +1,31 @@
+
+addons:
+  coverity_scan:
+    project:
+      name: "Hopetech/virglrenderer"
+      description: "VirGL virtual OpenGL renderer"
+    notification_email: tournier.elie@gmail.com
+    build_command_prepend: "./autogen.sh"
+    build_command: "make -j2"
+    branch_pattern: coverity_scan
+
+language: c
+
+branches:
+    only:
+      - coverity_scan
+
+os:
+   - linux
+
+dist: xenial
+
+install:
+   - sudo apt-get update
+   - sudo apt-get install -y libepoxy-dev
+   - sudo apt-get install -y mesa-utils-extra
+   - sudo apt-get install -y coreutils libegl1-mesa-dev libgl1-mesa-dev libgbm-dev libx11-dev
+
+script:
+   - ./autogen.sh
+   - make -j2
